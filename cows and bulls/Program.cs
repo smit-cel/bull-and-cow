@@ -11,6 +11,7 @@ namespace cows_and_bulls
 
             string choose_number()
             {
+
                 int x = 0;
                 int y = 0;
                 int w = 0;
@@ -48,15 +49,29 @@ namespace cows_and_bulls
             int bulls = 0;
             int cows = 0;
             char[] digits = { '1', '2', '3', '4'};
+            int tries = 0;
             while (bulls != 4)
             {
                 cows = 0;
                 bulls = 0;
                 string user = Console.ReadLine();
+                tries ++;
                 digits = user.ToCharArray();
+                bool isInt = int.TryParse(user, out _);
+                if (isInt == false)
+                {
+                    Console.WriteLine("enter numbers only");
+                    break;
+                }
+                if (digits.Length != 4)
+                {
+                    Console.WriteLine("have to enter 4 digits");
+                    break;
+                }
                 if (digits[0] == '0')
                 {
                     Console.WriteLine("cant have 0 start");
+                    break;
                 }
                 for (int i = 0; i < digits.Length; i++)
                 {
@@ -83,7 +98,10 @@ namespace cows_and_bulls
                 }
                 Console.WriteLine(cows + " cows " + bulls + " bulls ");
             }
-            Console.WriteLine("DONE");
+            if (bulls == 4)
+            {
+                Console.WriteLine("DONE " + tries + " tries");
+            }
         }
     }
 }
