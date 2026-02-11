@@ -1,4 +1,5 @@
-﻿using System.Reflection.Metadata;
+﻿using System.Globalization;
+using System.Reflection.Metadata;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace cows_and_bulls
@@ -7,10 +8,9 @@ namespace cows_and_bulls
     {
         static void Main(string[] args)
         {
-            int bulls = 0;
-            int cows = 0;
+
             string choose_number()
-                {
+            {
                 int x = 0;
                 int y = 0;
                 int w = 0;
@@ -44,12 +44,46 @@ namespace cows_and_bulls
             }
 
             string secret = choose_number();
-            string user = Console.ReadLine();
-            char[] digits = user.ToCharArray();
-            for (int i = 1; i < 5; i++)
+            char[] comp = secret.ToCharArray();
+            int bulls = 0;
+            int cows = 0;
+            char[] digits = { '1', '2', '3', '4'};
+            while (bulls != 4)
             {
-
+                cows = 0;
+                bulls = 0;
+                string user = Console.ReadLine();
+                digits = user.ToCharArray();
+                if (digits[0] == '0')
+                {
+                    Console.WriteLine("cant have 0 start");
+                }
+                for (int i = 0; i < digits.Length; i++)
+                {
+                    for (int j = i + 1; j < digits.Length; j++)
+                    {
+                        if (digits[i] == digits[j])
+                        {
+                            Console.WriteLine("cant have any same digits");
+                            goto here;
+                        }
+                    }
+                }
+            here:
+                for (int i = 0; i < 4; i++)
+                {
+                    if (digits[i] == secret[i])
+                    {
+                        bulls++;
+                    }
+                    else if (secret.Contains(digits[i]))
+                    {
+                        cows++;
+                    }
+                }
+                Console.WriteLine(cows + " cows " + bulls + " bulls ");
             }
+            Console.WriteLine("DONE");
         }
     }
 }
